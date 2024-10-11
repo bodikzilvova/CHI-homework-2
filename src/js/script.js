@@ -29,13 +29,11 @@ const obj = {
 obj.getData.call({ name: "Yulia", age: 18 });
 
 function personData(name, age) {
-  return function () {
-    obj.getData.call({ name, age });
-  };
+  return obj.getData.bind({ name, age });
 }
 
 const showPersonDataInfo = personData("Mike", 5);
-showPersonDataInfo("Mike", 5);
+showPersonDataInfo();
 
 //3
 
