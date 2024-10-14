@@ -25,14 +25,9 @@ const obj = {
     console.log(`Person name is: ${this.name} and age ${this.age}`);
   },
 };
-
 obj.getData.call({ name: "Yulia", age: 18 });
 
-function personData(name, age) {
-  return obj.getData.bind({ name, age });
-}
-
-const showPersonDataInfo = personData("Mike", 5);
+const showPersonDataInfo = obj.getData.bind({ name: "Mike", age: 5 });
 showPersonDataInfo();
 
 //3
@@ -133,3 +128,46 @@ student.study();
 const teacher = new Teacher("John", "987-654-321", "Physic");
 teacher.introduce();
 teacher.teach();
+
+//ES 5
+
+function HumanES5(name, phone) {
+  this.name = name;
+  this.phone = phone;
+}
+
+HumanES5.prototype.introduceES5 = function () {
+  console.log(`Привіт, мене звати ${this.name}, мій номер ${this.phone}.`);
+};
+
+function StudentES5(name, phone, course) {
+  HumanES5.call(this, name, phone);
+  this.course = course;
+}
+
+StudentES5.prototype = Object.create(HumanES5.prototype);
+StudentES5.prototype.constructor = StudentES5;
+
+StudentES5.prototype.studyES5 = function () {
+  console.log(`Я навчаюся на ${this.course} курсі.`);
+};
+
+function TeacherES5(name, phone, subject) {
+  HumanES5.call(this, name, phone);
+  this.subject = subject;
+}
+
+TeacherES5.prototype = Object.create(HumanES5.prototype);
+TeacherES5.prototype.constructor = TeacherES5;
+
+TeacherES5.prototype.teachES5 = function () {
+  console.log(`Я викладаю ${this.subject}.`);
+};
+
+const studentES5 = new StudentES5("Olha", "123-456-789", 2);
+studentES5.introduceES5();
+studentES5.studyES5();
+
+const teacherES5 = new TeacherES5("John", "987-654-321", "Physic");
+teacherES5.introduceES5();
+teacherES5.teachES5();

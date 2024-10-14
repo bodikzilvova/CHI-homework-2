@@ -28,16 +28,11 @@ obj.getData.call({
     name: "Yulia",
     age: 18
 });
-function personData(name, age) {
-    return function() {
-        obj.getData.call({
-            name,
-            age
-        });
-    };
-}
-const showPersonDataInfo = personData("Mike", 5);
-showPersonDataInfo("Mike", 5);
+const showPersonDataInfo = obj.getData.bind({
+    name: "Mike",
+    age: 5
+});
+showPersonDataInfo();
 //3
 const root = {
     name: "name",
@@ -116,5 +111,37 @@ student.study();
 const teacher = new Teacher("John", "987-654-321", "Physic");
 teacher.introduce();
 teacher.teach();
+//ES 5
+function HumanES5(name, phone) {
+    this.name = name;
+    this.phone = phone;
+}
+HumanES5.prototype.introduceES5 = function() {
+    console.log(`\u{41F}\u{440}\u{438}\u{432}\u{456}\u{442}, \u{43C}\u{435}\u{43D}\u{435} \u{437}\u{432}\u{430}\u{442}\u{438} ${this.name}, \u{43C}\u{456}\u{439} \u{43D}\u{43E}\u{43C}\u{435}\u{440} ${this.phone}.`);
+};
+function StudentES5(name, phone, course) {
+    HumanES5.call(this, name, phone);
+    this.course = course;
+}
+StudentES5.prototype = Object.create(HumanES5.prototype);
+StudentES5.prototype.constructor = StudentES5;
+StudentES5.prototype.studyES5 = function() {
+    console.log(`\u{42F} \u{43D}\u{430}\u{432}\u{447}\u{430}\u{44E}\u{441}\u{44F} \u{43D}\u{430} ${this.course} \u{43A}\u{443}\u{440}\u{441}\u{456}.`);
+};
+function TeacherES5(name, phone, subject) {
+    HumanES5.call(this, name, phone);
+    this.subject = subject;
+}
+TeacherES5.prototype = Object.create(HumanES5.prototype);
+TeacherES5.prototype.constructor = TeacherES5;
+TeacherES5.prototype.teachES5 = function() {
+    console.log(`\u{42F} \u{432}\u{438}\u{43A}\u{43B}\u{430}\u{434}\u{430}\u{44E} ${this.subject}.`);
+};
+const studentES5 = new StudentES5("Olha", "123-456-789", 2);
+studentES5.introduceES5();
+studentES5.studyES5();
+const teacherES5 = new TeacherES5("John", "987-654-321", "Physic");
+teacherES5.introduceES5();
+teacherES5.teachES5();
 
 //# sourceMappingURL=index.09c24910.js.map
